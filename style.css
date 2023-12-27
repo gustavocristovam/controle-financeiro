@@ -12,12 +12,13 @@ html, body {
 
 .container {
     margin: auto;
-    width: min(95vw,500px);
+    width: min(95vw,800px);
 }
 
 #balance > h2 {
     color: white;
 }
+
 
 header {
     background-color: forestgreen;
@@ -65,24 +66,20 @@ footer {
 }
 
 /* TRANSAÇÕES*/
-
 #transacao {
-    
-   
-   
+    margin-top: 1rem;
 }
 
 #dados-tabela {
     border-spacing: 0 0.3rem;
 }
 
-#transacao {
-    padding: 1rem;
-    width: 100%;
+#dados-tabela {
+   width: 100%;
 }
 
 table th {
-    background-color: white;
+    background-color: rgb(255, 0, 0);
     padding: 1rem 2rem;
     text-align: left;
     
