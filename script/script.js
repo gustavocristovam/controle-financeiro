@@ -60,44 +60,28 @@ function updateBalance() {
 }
 
 function somaEntradas() {
-    let entradaAmount = 0;
-    const tabela = document.getElementById('dados-tabela');
-    const linhas = tabela.querySelectorAll('tbody tr');
-
-    linhas.forEach(linha => {
-        let celulaAmount = linha.querySelector('.entrada.in');
-        let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\+|R\$/g, ''));
-
-
-        if (!isNaN(valorAmount) && valorAmount > 0) {
-            entradaAmount += valorAmount;
-        }
-    });
-
-    console.log('Total de Entradas:', entradaAmount);
-    return entradaAmount;
+    return calcularTotal('.in');
 }
 
 function somaSaidas() {
-    let saidaAmount = 0;
+    return calcularTotal('.out');
+}
+
+function calcularTotal(classe) {
+    let total = 0;
     const tabela = document.getElementById('dados-tabela');
     const linhas = tabela.querySelectorAll('tbody tr');
 
     linhas.forEach(linha => {
-        let celulaAmount = linha.querySelector('.entrada.out');
-        let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\-|R\$/g, ''));
-
+        let celulaAmount = linha.querySelector(classe);
+        let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\-|\+|R\$/g, ''));
 
         if (!isNaN(valorAmount) && valorAmount > 0) {
-            saidaAmount += valorAmount;
+            total += valorAmount;
         }
     });
 
-    console.log('Total de Saida:', saidaAmount);
-    return saidaAmount;
+    console.log(`Total de ${classe.includes('.in') ? 'Entradas' : 'Saídas'}:`, total);
+    return total;
 }
-
-
-
-
 
