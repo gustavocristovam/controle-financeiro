@@ -6,61 +6,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanças</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="media-query.css">
 </head>
 
 <body>
-    <header><h1 id="title"><strong>Controle Financeiro</strong></h1></header>
+    <header>
+        <h1 id="title"><strong>Controle Financeiro</strong></h1>
+
+    </header>
     <main class="container">
-        
+
 
         <section id="balance">
-            <h2>Balanço</h2>
+            <h2 class="sr-only">Balanço</h2>
             <div class="box" id="entrada">
-                <h3>Entradas</h3>
+                <h3>
+                    <span>Entradas</span>
+                    <img class='img' src="imagens/cima.svg" alt="Imagem Entradas">
+                </h3>
                 <p>R$ 1.000,00</p>
             </div>
             <div class="box" id="saida">
-                <h3>Saida</h3>
+                <h3>
+                    <span>Saida</span>
+                    <img class='img' src="imagens/baixo.svg" alt="Imagem Saidas">
+                </h3>
                 <p>R$ 1.000,00</p>
             </div>
             <div class="box" id="total">
-                <h3>Total</h3>
+                <h3><span>Total</span>
+                    <img class='img' src="imagens/total.svg" alt="Imagem Total">
+                </h3>
                 <p>R$ 1.000,00</p>
             </div>
 
         </section>
 
         <section id="transacao">
-            <h2>Transações</h2>
+            <h2 class="sr-only">Transações</h2>
+
+            <p class="button novo" onclick="neww()">+ Nova transação</p>
+
             <table id="dados-tabela">
                 <thead>
                     <tr>
                         <th>Descrição</th>
                         <th>Valor</th>
                         <th>Data</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Luz</td>
-                        <td>- R$500,00</td>
-                        <td>15/12/2023</td>
+                        <td class="description">Luz</td>
+                        <td class="saida">- R$500,00</td>
+                        <td class="date">15/12/2023</td>
+                        <td> <img class='img' src="imagens/remove.png" alt="Remove"></td>
+
                     </tr>
                     <tr>
-                        <td>Mega-sena</td>
-                        <td>R$3.000,00</td>
-                        <td>20/12/2023</td>
+                        <td class="description">Mega-sena</td>
+                        <td class="entrada">R$3.000,00</td>
+                        <td class="date">20/12/2023</td>
+                        <td> <img class='img' src="imagens/remove.png" alt="Remove"></td>
                     </tr>
                     <tr>
-                        <td>Alguel</td>
-                        <td>- R$750,00</td>
-                        <td>27/12/2023</td>
+                        <td class="description">Aluguel</td>
+                        <td class="saida">- R$750,00</td>
+                        <td class="date">27/12/2023</td>
+                        <td> <img class='img' src="imagens/remove.png" alt="Remove"></td>
                     </tr>
                 </tbody>
             </table>
         </section>
 
     </main>
+    <script src="script/script.js"></script>
+    <div class="modal-overlay">
+        <div class="modal">
+
+            <div class="form">
+                <h2>Nova transação</h2>
+                <form action="">
+                    <div class="input-group">
+                        <label class="sr-only" for="descriptionid">Descrição</label><input type="text"
+                            name="description" id="descriptionid" placeholder="Descrição">
+
+                    </div>
+                    <div class="input-group">
+                        <label class="sr-only" for="valueid">valor</label><input type="number" step="0.01" name="value"
+                            id="valueid" placeholder="0,00">
+                        <small class='help'>Use o sinal - (negativo) para despesas e, (vírgula) para casas
+                            decimais</small>
+
+                    </div>
+                    <div class="input-group">
+                        <label class="sr-only" for="dataid">data</label><input type="date" name="description"
+                            id="dataid">
+                    </div>
+
+                    <div class=""input-group actions> </div>
+                    <a href="#" class="button cancel"></a>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>Site criado por <a href="https://github.com/gustavocristovam">Gustavo Cristovam</a></p>
     </footer>
