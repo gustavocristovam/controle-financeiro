@@ -11,16 +11,16 @@ function cancel() {
 }
 
 function formatCurrency(amount) {
-        const signal = amount > 0 ? "+" : ""
-        const formatoMoeda = new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL' // Código de moeda para Real Brasileiro
-        });
-    
-        // Formatando o valor como moeda
-        const valorFormatado = signal + formatoMoeda.format(amount);
-    
-        return valorFormatado;
+    const signal = amount > 0 ? "+" : ""
+    const formatoMoeda = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL' // Código de moeda para Real Brasileiro
+    });
+
+    // Formatando o valor como moeda
+    const valorFormatado = signal + formatoMoeda.format(amount);
+
+    return valorFormatado;
 }
 
 function adicionar() {
@@ -34,7 +34,7 @@ function adicionar() {
     // Criar uma nova linha
     const novaLinha = document.createElement('tr');
 
-    const CSSCla = amount > 0 ? "entrada" : "saida"
+    const CSSCla = amount > 0 ? "in" : "out"
     var amount = formatCurrency(amount)
 
     // Adicionar células à nova linha
@@ -47,6 +47,57 @@ function adicionar() {
 
     // Adicionar a nova linha ao tbody
     tbody.appendChild(novaLinha);
-
-    console.log(tbody);
+    updateBalance()
 }
+
+function updateBalance() {
+    
+    document.querySelector('p#entrada_amount').innerHTML = somaEntradas()
+    document.querySelector('p#saida_amount').innerHTML = somaSaidas()
+
+
+
+}
+
+function somaEntradas() {
+    let entradaAmount = 0;
+    const tabela = document.getElementById('dados-tabela');
+    const linhas = tabela.querySelectorAll('tbody tr');
+
+    linhas.forEach(linha => {
+        let celulaAmount = linha.querySelector('.entrada.in');
+        let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\+|R\$/g, ''));
+
+
+        if (!isNaN(valorAmount) && valorAmount > 0) {
+            entradaAmount += valorAmount;
+        }
+    });
+
+    console.log('Total de Entradas:', entradaAmount);
+    return entradaAmount;
+}
+
+function somaSaidas() {
+    let saidaAmount = 0;
+    const tabela = document.getElementById('dados-tabela');
+    const linhas = tabela.querySelectorAll('tbody tr');
+
+    linhas.forEach(linha => {
+        let celulaAmount = linha.querySelector('.entrada.out');
+        let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\-|R\$/g, ''));
+
+
+        if (!isNaN(valorAmount) && valorAmount > 0) {
+            saidaAmount += valorAmount;
+        }
+    });
+
+    console.log('Total de Saida:', saidaAmount);
+    return saidaAmount;
+}
+
+
+
+
+
