@@ -57,25 +57,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="description">Luz</td>
-                        <td class="saida">- R$500,00</td>
-                        <td class="date">15/12/2023</td>
-                        <td> <img class='img' src="imagens/remove.png" alt="Remove"></td>
-
-                    </tr>
-                    <tr>
-                        <td class="description">Mega-sena</td>
-                        <td class="entrada">R$3.000,00</td>
-                        <td class="date">20/12/2023</td>
-                        <td> <img class='img' src="imagens/remove.png" alt="Remove"></td>
-                    </tr>
-                    <tr>
-                        <td class="description">Aluguel</td>
-                        <td class="saida">- R$750,00</td>
-                        <td class="date">27/12/2023</td>
-                        <td> <img class='img' src="imagens/remove.png" alt="Remove"></td>
-                    </tr>
+                 
                 </tbody>
             </table>
         </section>
@@ -89,12 +71,12 @@
                 <form action="">
                     <div class="input-group">
                         <label class="sr-only" for="descriptionid">Descrição</label><input type="text"
-                            name="description" id="descriptionid" placeholder="Descrição">
+                            name="description" id="descriptionid" placeholder="Descrição" required>
 
                     </div>
                     <div class="input-group">
                         <label class="sr-only" for="valueid">valor</label><input type="number" step="0.01" name="value"
-                            id="valueid" placeholder="0,00">
+                            id="valueid" placeholder="0,00" required>
                         <small class='help'>Use o sinal - (negativo) para despesas e, (vírgula) para casas
                             decimais</small>
 
@@ -107,7 +89,7 @@
                     <div class="input-group actions">
 
                         <a href="#" id="cancel" class="newtransition cancel" onclick="cancel()">Cancelar</a>
-                        <button>Salvar</button>
+                        <button type='button' onclick="adicionar()">Salvar</button>
                     </div>
 
                 </form>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com Tabela</title>
+</head>
+<body>
+
+    <form id="meuFormulario">
+        <label for="descriptionid">Descrição:</label>
+        <input type="text" id="descriptionid" name="descriptionid">
+
+        <label for="valueid">Valor:</label>
+        <input type="text" id="valueid" name="valueid">
+
+        <label for="dataid">Data:</label>
+        <input type="text" id="dataid" name="dataid">
+
+        <button type="button" onclick="adicionar()">Adicionar Linha</button>
+    </form>
+
+    <table id="dados-tabela" border="1">
+        <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Remover</th>
+        </tr>
+    </table>
+
+    <script>
+        function adicionar() {
+            let description = document.querySelector('input#descriptionid').value;
+            let amount = document.querySelector('input#valueid').value;
+            let date = document.querySelector('input#dataid').value;
+
+            const tbody = document.querySelector('#dados-tabela tbody');
+
+            const novaLinha = document.createElement('tr');
+            novaLinha.innerHTML = `
+                <td class="description">${description}</td>
+                <td class="entrada">${amount}</td>
+                <td class="date">${date}</td>
+                <td><img class='img' src="imagens/remove.png" alt="Remove"></td>
+            `;
+
+            tbody.appendChild(novaLinha);
+
+            // Limpar os campos do formulário
+            document.querySelector('input#descriptionid').value = '';
+            document.querySelector('input#valueid').value = '';
+            document.querySelector('input#dataid').value = '';
+        }
+    </script>
+
+</body>
+</html>
