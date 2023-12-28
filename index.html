@@ -45,7 +45,7 @@
         <section id="transacao">
             <h2 class="sr-only">Transações</h2>
 
-            <p class="button novo" onclick="neww()">+ Nova transação</p>
+            <p class="newtransition" onclick="neww()">+ Nova transação</p>
 
             <table id="dados-tabela">
                 <thead>
@@ -84,7 +84,6 @@
     <script src="script/script.js"></script>
     <div class="modal-overlay">
         <div class="modal">
-
             <div class="form">
                 <h2>Nova transação</h2>
                 <form action="">
@@ -105,9 +104,11 @@
                             id="dataid">
                     </div>
 
-                    <div class=""input-group actions> </div>
-                    <a href="#" class="button cancel"></a>
+                    <div class="input-group actions">
 
+                        <a href="#" id="cancel" class="newtransition cancel" onclick="cancel()">Cancelar</a>
+                        <button>Salvar</button>
+                    </div>
 
                 </form>
             </div>
