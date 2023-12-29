@@ -12,13 +12,15 @@ function cancel() {
 
 function formatCurrency(amount) {
     const signal = amount < 0 ? "-" : ""
+   
+
+    amount = String(amount).replace(/\D/g, "")
+    amount = Number(amount) 
+
     const formatoMoeda = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL' // Código de moeda para Real Brasileiro
     });
-
-    amount = String(amount).replace(/\D/g, "")
-    amount = Number(amount)
     // Formatando o valor como moeda
     const valorFormatado = signal + formatoMoeda.format(amount);
 
@@ -72,7 +74,8 @@ function somaSaidas() {
 
 
 function somaTotal() {
-    somaEntradas() - somaSaidas()
+   var total = somaEntradas() + somaSaidas() 
+   
     return total
 }
 
@@ -83,19 +86,16 @@ function calcularTotal(classe) {
 
     linhas.forEach(linha => {
         let celulaAmount = linha.querySelector(classe);
-
+        console.log(celulaAmount)
         // Adicione uma verificação para garantir que celulaAmount não seja nulo
         if (celulaAmount) {
-            let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\s+/g, '').replace(/R\$/g, '')); 
-            console.log(valorAmount)
+            let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\s+/g, '').replace(/R\$/g, '').replace(/[^\d,-]/g, '')); 
+          
 
 
-            if (!isNaN(valorAmount) && valorAmount > 0) {
+            if (!isNaN(valorAmount)) {
                 total += valorAmount;
-            } else if(!isNaN(valorAmount) && valorAmount < 0) {
-                
-                total -= valorAmount;
-            }
+            } 
         }
     });
 

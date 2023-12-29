@@ -1,14 +1,6 @@
-function somaEntradas() {
-    return calcularTotal('.in');
-}
-
-function somaSaidas() {
-    return calcularTotal('.out');
-}
-
 
 function calcularTotal(classe) {
-  linhas = ['-R$ 30,00','R$ -50,00','-R$25,00']
+  linhas = ['-R$ 3000,00','R$ -50,00','-R$25,00']
     total = 0
     linhas.forEach(linha => {
         let celulaAmount = linha
@@ -20,18 +12,18 @@ function calcularTotal(classe) {
             console.log(valorAmount)
 
 
-            if (!isNaN(valorAmount) && valorAmount > 0) {
+            if (!isNaN(valorAmount) ) {
                 total += valorAmount;
-            } else if(!isNaN(valorAmount) && valorAmount < 0) {
-                
-                total -= valorAmount;
+               
             }
         }
     });
 
     
+    
+    console.log(total)
     return total;
 }
 
 
-somaEntradas()
+calcularTotal()
