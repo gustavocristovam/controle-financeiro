@@ -11,12 +11,14 @@ function cancel() {
 }
 
 function formatCurrency(amount) {
-    const signal = amount > 0 ? "+" : ""
+    const signal = amount < 0 ? "-" : ""
     const formatoMoeda = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL' // Código de moeda para Real Brasileiro
     });
 
+    amount = String(amount).replace(/\D/g, "")
+    amount = Number(amount)
     // Formatando o valor como moeda
     const valorFormatado = signal + formatoMoeda.format(amount);
 
@@ -51,9 +53,10 @@ function adicionar() {
 }
 
 function updateBalance() {
-    
-    document.querySelector('p#entrada_amount').innerHTML = somaEntradas()
-    document.querySelector('p#saida_amount').innerHTML = somaSaidas()
+
+    document.querySelector('p#entrada_amount').innerHTML = formatCurrency(somaEntradas())
+    document.querySelector('p#saida_amount').innerHTML = formatCurrency(somaSaidas())
+    document.querySelector('p#total_amount').innerHTML = formatCurrency(somaTotal())
 
 
 
@@ -67,6 +70,12 @@ function somaSaidas() {
     return calcularTotal('.out');
 }
 
+
+function somaTotal() {
+    somaEntradas() - somaSaidas()
+    return total
+}
+
 function calcularTotal(classe) {
     let total = 0;
     const tabela = document.getElementById('dados-tabela');
@@ -74,14 +83,22 @@ function calcularTotal(classe) {
 
     linhas.forEach(linha => {
         let celulaAmount = linha.querySelector(classe);
-        let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\-|\+|R\$/g, ''));
 
-        if (!isNaN(valorAmount) && valorAmount > 0) {
-            total += valorAmount;
+        // Adicione uma verificação para garantir que celulaAmount não seja nulo
+        if (celulaAmount) {
+            let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\s+/g, '').replace(/R\$/g, '')); 
+            console.log(valorAmount)
+
+
+            if (!isNaN(valorAmount) && valorAmount > 0) {
+                total += valorAmount;
+            } else if(!isNaN(valorAmount) && valorAmount < 0) {
+                
+                total -= valorAmount;
+            }
         }
     });
 
-    console.log(`Total de ${classe.includes('.in') ? 'Entradas' : 'Saídas'}:`, total);
+    
     return total;
 }
-
