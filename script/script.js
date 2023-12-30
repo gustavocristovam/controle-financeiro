@@ -14,7 +14,8 @@ function formatCurrency(amount) {
     const signal = amount < 0 ? "-" : ""
    
 
-    amount = String(amount).replace(/\D/g, "")
+    amount = String(amount).replace(/[^\d.]/g, "")
+    
     amount = Number(amount) 
 
     const formatoMoeda = new Intl.NumberFormat('pt-BR', {
@@ -30,17 +31,17 @@ function formatCurrency(amount) {
 function adicionar() {
     // Obter os valores dos campos de entrada
     var description = document.querySelector('input#descriptionid').value;
-    var amount = Number(document.querySelector('input#valueid').value);
+    var amount = parseFloat(document.querySelector('input#valueid').value);
     var date = document.querySelector('input#dataid').value;
     // Obter a referência ao tbody da tabela
     const tbody = document.querySelector('#dados-tabela tbody');
-
+    
     // Criar uma nova linha
     const novaLinha = document.createElement('tr');
 
     const CSSCla = amount > 0 ? "in" : "out"
     var amount = formatCurrency(amount)
-
+    
     // Adicionar células à nova linha
     novaLinha.innerHTML = `
         <td class="description">${description}</td>
@@ -89,10 +90,14 @@ function calcularTotal(classe) {
         console.log(celulaAmount)
         // Adicione uma verificação para garantir que celulaAmount não seja nulo
         if (celulaAmount) {
-            let valorAmount = parseFloat(celulaAmount.textContent.trim().replace(/\s+/g, '').replace(/R\$/g, '').replace(/[^\d,-]/g, '')); 
+            
+
+            let valorAmount = parseFloat(celulaAmount.textContent.replace(/[^\d,-]/g, '').replace(/,(?=\d{3})/g, '')); 
+
+           
           
 
-
+            console.log(valorAmount)
             if (!isNaN(valorAmount)) {
                 total += valorAmount;
             } 

@@ -1,29 +1,12 @@
+var valores = ['R$ 0,25', 'R$ 5,00', 'R$ 3.000,25', '-R$ 600,00'];
 
-function calcularTotal(classe) {
-  linhas = ['-R$ 3000,00','R$ -50,00','-R$25,00']
-    total = 0
-    linhas.forEach(linha => {
-        let celulaAmount = linha
+valores.forEach(valor => {
+    // Substitui vírgulas por pontos para garantir que o ponto decimal seja reconhecido corretamente
+    valor = valor.replace(',', '.');
 
-        // Adicione uma verificação para garantir que celulaAmount não seja nulo
-        if (celulaAmount) {
-            let valorAmount = parseFloat(celulaAmount.trim().replace(/\s+/g, '').replace(/R\$/g, '')); 
-            console.log(typeof(valorAmount))
-            console.log(valorAmount)
+    // Ajusta a expressão regular para permitir pontos como separadores de milhar
+    var n = parseFloat(valor.replace(/[^\d,-]/g, '').replace(/,(?=\d{3})/g, '')); 
 
-
-            if (!isNaN(valorAmount) ) {
-                total += valorAmount;
-               
-            }
-        }
-    });
-
-    
-    
-    console.log(total)
-    return total;
-}
-
-
-calcularTotal()
+     n = n / 100
+    console.log(n);
+});
