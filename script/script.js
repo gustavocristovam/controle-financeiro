@@ -47,7 +47,7 @@ function adicionar() {
         <td class="description">${description}</td>
         <td class="entrada ${CSSCla}">${amount}</td>
         <td class="date">${date}</td>
-        <td><img class='img' src="imagens/remove.png" alt="Remove"></td>
+        <td><img class='img' src="imagens/remove.png" alt="Remove" onclick='remove(this)'></td>
     `;
 
     // Adicionar a nova linha ao tbody
@@ -111,3 +111,15 @@ function calcularTotal(classe) {
 
     return total;
 }
+
+function clearTransation() {
+    document.querySelector('#dados-tabela tbody').innerHTML = ''
+}
+
+function remove(element) {
+    var rowIndex = element.closest('tr').rowIndex;
+    document.querySelector('#dados-tabela tbody').deleteRow(rowIndex - 1);
+    updateBalance();
+}
+
+
