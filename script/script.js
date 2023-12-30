@@ -12,11 +12,11 @@ function cancel() {
 
 function formatCurrency(amount) {
     const signal = amount < 0 ? "-" : ""
-   
+
 
     amount = String(amount).replace(/[^\d.]/g, "")
-    
-    amount = Number(amount) 
+
+    amount = Number(amount)
 
     const formatoMoeda = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -35,13 +35,13 @@ function adicionar() {
     var date = document.querySelector('input#dataid').value;
     // Obter a referência ao tbody da tabela
     const tbody = document.querySelector('#dados-tabela tbody');
-    
+
     // Criar uma nova linha
     const novaLinha = document.createElement('tr');
 
     const CSSCla = amount > 0 ? "in" : "out"
     var amount = formatCurrency(amount)
-    
+
     // Adicionar células à nova linha
     novaLinha.innerHTML = `
         <td class="description">${description}</td>
@@ -75,8 +75,8 @@ function somaSaidas() {
 
 
 function somaTotal() {
-   var total = somaEntradas() + somaSaidas() 
-   
+    var total = somaEntradas() + somaSaidas()
+
     return total
 }
 
@@ -87,23 +87,27 @@ function calcularTotal(classe) {
 
     linhas.forEach(linha => {
         let celulaAmount = linha.querySelector(classe);
-        console.log(celulaAmount)
+
         // Adicione uma verificação para garantir que celulaAmount não seja nulo
         if (celulaAmount) {
-            
 
-            let valorAmount = parseFloat(celulaAmount.textContent.replace(/[^\d,-]/g, '').replace(/,(?=\d{3})/g, '')); 
+            let valorAmount = celulaAmount.textContent.replace(',', '.');
+            console.log(celulaAmount)
 
-           
-          
+            valorAmount = parseFloat(valorAmount.replace(/[^\d,-]/g, ''));
+
+            valorAmount = valorAmount / 100
+
+
+
 
             console.log(valorAmount)
             if (!isNaN(valorAmount)) {
                 total += valorAmount;
-            } 
+            }
         }
     });
 
-    
+
     return total;
 }
