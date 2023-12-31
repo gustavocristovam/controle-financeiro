@@ -1,13 +1,20 @@
 
-var valores = ['R$ 0,25', 'R$ 5,00', 'R$ 3.000,25', '-R$ 600,00'];
+transacoes1 = { id: 1703980544327, description: '', amount: 5, date: '' }
+console.log(transacoes1.length)
+transacoes2 = [
+    {
+        "id": 1703976505693,
+        "description": "",
+        "amount": 30,
+        "date": ""
+    },
+    {
+        "id": 1703976510729,
+        "description": "",
+        "amount": 170,
+        "date": ""
+    }
 
-valores.forEach(valor => {
-    // Substitui vírgulas por pontos para garantir que o ponto decimal seja reconhecido corretamente
-    valor = valor.replace(',', '.');
+]
 
-    
-    var n = parseFloat(valor.replace(/[^\d,-]/g, '').replace(/,(?=\d{3})/g, '')); 
-
-     n = n / 100
-    console.log(n);
-});
+console.log(transacoes2.length)

@@ -36,24 +36,86 @@ function adicionar() {
     // Obter a referência ao tbody da tabela
     const tbody = document.querySelector('#dados-tabela tbody');
 
+    // Obter a lista de transações do Local Storage
+    var transacoes = obterTransacoesDoLocalStorage();
+
+    // Adicionar a nova transação à lista
+    var novatransacao = {
+        id: new Date().getTime(),
+        description: description,
+        amount: amount,
+        date: date
+    };
+
+    transacoes.push(novatransacao)
+
+    // Salvar a lista atualizada de transações no Local Storage
+    salvarTransacoesNoLocalStorage(transacoes);
+
+
+    adicionarLinhaNaTabela(novatransacao);
+
+    
+}
+
+function adicionarLinhaNaTabela(transacoes) {
+    // Obter a referência ao tbody da tabela
+   
+        // Verificar se o valor é um objeto
+        if (typeof transacoes === 'object' && transacoes !== null && !Array.isArray(transacoes)) {
+          // Transformar o objeto em uma array
+          transacoes = [transacoes];
+         
+        } 
+     
+    console.log(transacoes)
+    console.log(transacoes.length)
+  
+    for(let transacao in transacoes) {
+        
+    const tbody = document.querySelector('#dados-tabela tbody');
+
     // Criar uma nova linha
     const novaLinha = document.createElement('tr');
 
-    const CSSCla = amount > 0 ? "in" : "out"
-    var amount = formatCurrency(amount)
+    const CSSCla = transacoes[transacao].amount > 0 ? "in" : "out";
+    var amount = formatCurrency(transacoes[transacao].amount);
 
     // Adicionar células à nova linha
     novaLinha.innerHTML = `
-        <td class="description">${description}</td>
+        <td class="description">${transacoes[transacao].description}</td>
         <td class="entrada ${CSSCla}">${amount}</td>
-        <td class="date">${date}</td>
-        <td><img class='img' src="imagens/remove.png" alt="Remove" onclick='remove(this)'></td>
+        <td class="date">${transacoes[transacao].date}</td>
+        <td><img class='img' src="imagens/remove.png" alt="Remove" onclick='remove(${transacoes[transacao].id})'></td>
     `;
+
+    // Adicionar o identificador único como data-id à linha
+    novaLinha.dataset.id = transacao.id;
 
     // Adicionar a nova linha ao tbody
     tbody.appendChild(novaLinha);
-    updateBalance()
+    }
 }
+
+// Função para obter a lista de transações do Local Storage
+function obterTransacoesDoLocalStorage() {
+    var transacoes = localStorage.getItem('transacoes');
+
+    // Se não houver transações armazenadas, retorna um array vazio
+    return transacoes ? JSON.parse(transacoes) : [];
+}
+
+// Função para salvar a lista de transações no Local Storage
+function salvarTransacoesNoLocalStorage(transacoes) {
+    localStorage.setItem('transacoes', JSON.stringify(transacoes));
+   
+}
+
+
+
+
+
+
 
 function updateBalance() {
 
@@ -82,44 +144,54 @@ function somaTotal() {
 
 function calcularTotal(classe) {
     let total = 0;
-    const tabela = document.getElementById('dados-tabela');
-    const linhas = tabela.querySelectorAll('tbody tr');
-
-    linhas.forEach(linha => {
-        let celulaAmount = linha.querySelector(classe);
-
-        // Adicione uma verificação para garantir que celulaAmount não seja nulo
-        if (celulaAmount) {
-
-            let valorAmount = celulaAmount.textContent.replace(',', '.');
-            console.log(celulaAmount)
-
-            valorAmount = parseFloat(valorAmount.replace(/[^\d,-]/g, ''));
-
-            valorAmount = valorAmount / 100
+    var transacoes = obterTransacoesDoLocalStorage();
 
 
+    transacoesAmount = transacoes.map(transacao => transacao.amount)
+    
+    var transacao_soma = 0
 
+    for (let transacao in transacoesAmount) {
+        if (classe == '.in' && transacoesAmount[transacao] >0) {
+            
+            transacao_soma += transacoesAmount[transacao]
 
-            console.log(valorAmount)
-            if (!isNaN(valorAmount)) {
-                total += valorAmount;
-            }
+          
+        } else if (classe == '.out'  && transacoesAmount[transacao] < 0){
+            transacao_soma += transacoesAmount[transacao]
+
+            
         }
-    });
+    }
+    return transacao_soma;
+    
+    
+};
 
 
-    return total;
-}
 
 function clearTransation() {
     document.querySelector('#dados-tabela tbody').innerHTML = ''
 }
 
-function remove(element) {
-    var rowIndex = element.closest('tr').rowIndex;
-    document.querySelector('#dados-tabela tbody').deleteRow(rowIndex - 1);
+function remove(id) {
+    var transacoes = obterTransacoesDoLocalStorage();
+
+    // Remover a transação da lista com base no identificador único
+    transacoes = transacoes.filter(transacao => transacao.id !== id);
+
+    // Salvar a lista atualizada de transações no Local Storage
+    salvarTransacoesNoLocalStorage(transacoes);
+
+    // Remover a linha da tabela com base no identificador único
+    var linhaParaRemover = document.querySelector(`#dados-tabela tbody tr[data-id="${id}"]`);
+    linhaParaRemover.remove();
+
+    // Atualizar os saldos
     updateBalance();
 }
+
+updateBalance();
+adicionarLinhaNaTabela(obterTransacoesDoLocalStorage());
 
 
