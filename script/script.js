@@ -81,6 +81,9 @@ function adicionarLinhaNaTabela(transacoes) {
     const CSSCla = transacoes[transacao].amount > 0 ? "in" : "out";
     var amount = formatCurrency(transacoes[transacao].amount);
 
+
+    novaLinha.setAttribute('data-id', transacoes[transacao].id);
+
     // Adicionar células à nova linha
     novaLinha.innerHTML = `
         <td class="description">${transacoes[transacao].description}</td>
@@ -90,11 +93,12 @@ function adicionarLinhaNaTabela(transacoes) {
     `;
 
     // Adicionar o identificador único como data-id à linha
-    novaLinha.dataset.id = transacao.id;
+    
 
     // Adicionar a nova linha ao tbody
     tbody.appendChild(novaLinha);
     }
+    updateBalance();
 }
 
 // Função para obter a lista de transações do Local Storage
@@ -185,13 +189,16 @@ function remove(id) {
 
     // Remover a linha da tabela com base no identificador único
     var linhaParaRemover = document.querySelector(`#dados-tabela tbody tr[data-id="${id}"]`);
+
+  
     linhaParaRemover.remove();
 
     // Atualizar os saldos
+    
     updateBalance();
 }
 
-updateBalance();
+
 adicionarLinhaNaTabela(obterTransacoesDoLocalStorage());
 
 
