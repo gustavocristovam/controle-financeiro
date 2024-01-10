@@ -240,12 +240,14 @@ td.out {
     justify-content: center;
     opacity: 0;
     visibility: hidden;
+    
 }
 
 .modal-overlay.active {
     opacity: 1;
     visibility: visible;
     z-index: 998;
+    
 }
 
 .modal {
